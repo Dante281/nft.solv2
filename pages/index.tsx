@@ -4,8 +4,11 @@ import Head from "next/head"
 import styles from "../styles/Home.module.css"
 import NavBar from "../components/NavBar"
 import Disconnected from '../components/Disconnected'
+import { useWallet } from "@solana/wallet-adapter-react"
+import Connected from "../components/Connected"
 
 const Home: NextPage = () => {
+  const { connected } = useWallet()
 
   return (
     <div className={styles.container}>
@@ -18,7 +21,7 @@ const Home: NextPage = () => {
       <Box
         w="full"
         h="calc(100vh)"
-        bgImage={"url(/home-background.svg)"}
+        bgImage={connected ? "" : "url(/home-background.svg)"}
         backgroundPosition="center"
       >
         <Stack w="full" h="calc(100vh)" justify="center">
@@ -26,9 +29,7 @@ const Home: NextPage = () => {
           <NavBar />
 
           <Spacer />
-          <Center>
-						{ /* If connected, the second view, otherwise the first */ }
-                </Center>
+          <Center>{connected ? <Connected /> : <Disconnected />}</Center>
           <Spacer />
 
           <Center>
